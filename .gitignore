@@ -1,0 +1,228 @@
+# ---------------------------------------------------------------------------
+# Build results
+# ---------------------------------------------------------------------------
+[Bb]in/
+[Oo]bj/
+[Oo]ut/
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+x64/
+x86/
+[Ww][Ii][Nn]32/
+[Aa][Rr][Mm]/
+[Aa][Rr][Mm]64/
+[Ll]og/
+[Ll]ogs/
+artifacts/
+publish/
+*.publishsettings
+PublishScripts/
+
+# ---------------------------------------------------------------------------
+# .NET / MSBuild
+# ---------------------------------------------------------------------------
+project.lock.json
+project.fragment.lock.json
+*.binlog
+*.tlog
+*_i.c
+*_p.c
+*_h.h
+*.ilk
+*.meta
+*.obj
+*.iobj
+*.pch
+*.pdb
+*.ipdb
+*.pgc
+*.pgd
+*.rsp
+*.sbr
+*.tlb
+*.tli
+*.tlh
+*.tmp
+*.vspscc
+*.vssscc
+.builds
+*.pidb
+*.svclog
+*.scc
+*.VisualState.xml
+TestResult.xml
+[Tt]est[Rr]esult*/
+[Bb]uild[Ll]og.*
+*.coverage
+*.coveragexml
+coverage*.json
+coverage*.xml
+coverage*.info
+[Cc]overage[Rr]eport/
+BenchmarkDotNet.Artifacts/
+
+# ---------------------------------------------------------------------------
+# NuGet
+# ---------------------------------------------------------------------------
+*.nupkg
+*.snupkg
+**/[Pp]ackages/*
+!**/[Pp]ackages/build/
+*.nuget.props
+*.nuget.targets
+.nuget/
+
+# ---------------------------------------------------------------------------
+# Secrets / configuration
+# ---------------------------------------------------------------------------
+appsettings.Local.json
+appsettings.*.Local.json
+secrets.json
+*.pfx
+*.p12
+*.key
+*.pem
+.env
+.env.*
+!.env.example
+
+# ---------------------------------------------------------------------------
+# Visual Studio
+# ---------------------------------------------------------------------------
+.vs/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+*.userprefs
+*.dbmdl
+*.jfm
+*.psess
+*.vsp
+*.vspx
+*.sap
+*.opendb
+*.VC.db
+*.VC.VC.opendb
+ipch/
+*.aps
+*.ncb
+*.opensdf
+*.sdf
+*.cachefile
+
+# ---------------------------------------------------------------------------
+# Rider / JetBrains
+# ---------------------------------------------------------------------------
+.idea/
+*.sln.iml
+*.iml
+
+# ---------------------------------------------------------------------------
+# Visual Studio Code
+# ---------------------------------------------------------------------------
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+*.code-workspace
+
+# ---------------------------------------------------------------------------
+# Node / frontend
+# ---------------------------------------------------------------------------
+node_modules/
+dist/
+dist-ssr/
+build/
+.next/
+.nuxt/
+.cache/
+.parcel-cache/
+.vite/
+.eslintcache
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+.pnpm-store/
+*.local
+
+# ---------------------------------------------------------------------------
+# Docker / infrastructure
+# ---------------------------------------------------------------------------
+docker-compose.override.yml
+.docker/
+*.tfstate
+*.tfstate.*
+.terraform/
+
+# ---------------------------------------------------------------------------
+# Databases / local data
+# ---------------------------------------------------------------------------
+*.db
+*.db-shm
+*.db-wal
+*.sqlite
+*.sqlite3
+*.mdf
+*.ldf
+*.ndf
+pgdata/
+
+# ---------------------------------------------------------------------------
+# Operating system
+# ---------------------------------------------------------------------------
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+.AppleDouble
+.LSOverride
+Icon
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+*.lnk
+
+# ---------------------------------------------------------------------------
+# Editor / misc
+# ---------------------------------------------------------------------------
+*.swp
+*.swo
+*~
+*.bak
+*.orig
+*.rej
+.history/
+TODO.local.md
+scratch/
+
+# ---------------------------------------------------------------------------
+# Local tooling
+# ---------------------------------------------------------------------------
+.claude/
+.claude*/
+CLAUDE.md
+CLAUDE.local.md
+.claude.json
+.claude.json.backup
+.mcp.json
+.anthropic/
+.aider*
+.cursor/
+.cursorrules
+.cursorignore
+.windsurfrules
+.github/copilot-instructions.md
+.continue/
+.codeium/
+.gemini/
+GEMINI.md
+.agent/
+AGENTS.md
