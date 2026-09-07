@@ -77,6 +77,8 @@ BenchmarkDotNet.Artifacts/
 # ---------------------------------------------------------------------------
 # Secrets / configuration
 # ---------------------------------------------------------------------------
+appsettings.json
+appsettings.Development.json
 appsettings.Local.json
 appsettings.*.Local.json
 secrets.json
@@ -202,6 +204,7 @@ $RECYCLE.BIN/
 .history/
 TODO.local.md
 scratch/
+docs/
 
 # ---------------------------------------------------------------------------
 # Local tooling

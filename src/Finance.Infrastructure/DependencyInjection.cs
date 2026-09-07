@@ -1,3 +1,4 @@
+using Finance.Application.Common;
 using Finance.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -15,6 +16,8 @@ public static class DependencyInjection
         services.AddDbContext<FinanceDbContext>(options =>
             options.UseNpgsql(configuration.GetConnectionString("FinanceDb"))
         );
+
+        services.AddScoped<IFinanceDbContext>(sp => sp.GetRequiredService<FinanceDbContext>());
 
         return services;
     }

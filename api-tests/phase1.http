@@ -1,0 +1,68 @@
+@host = https://localhost:7193
+
+### 1. Categories — expect 9, ids 1–9, Food→Other
+GET {{host}}/api/categories
+
+### 2. Expenses list — expect []
+GET {{host}}/api/expenses
+
+### 3. Create expense — expect 201 + Location, categoryName "Food", amount 42.50
+# @name create
+POST {{host}}/api/expenses
+Content-Type: application/json
+
+{
+  "categoryId": 1,
+  "amount": 42.50,
+  "description": "Lunch",
+  "expenseDate": "2026-09-01"
+}
+
+### capture the created id for the requests below
+@id = {{create.response.body.id}}
+
+### 4. Get by id — expect 200, same expense
+GET {{host}}/api/expenses/{{id}}
+
+### 5. Get unknown id — expect 404
+GET {{host}}/api/expenses/00000000-0000-0000-0000-000000000000
+
+### 6. List again — expect one item
+GET {{host}}/api/expenses
+
+### 7. Update — expect 204; then GET shows Transport / 99.99 / updatedAt > createdAt
+PUT {{host}}/api/expenses/{{id}}
+Content-Type: application/json
+
+{
+  "categoryId": 2,
+  "amount": 99.99,
+  "description": "Taxi",
+  "expenseDate": "2026-09-02"
+}
+
+### 7b. Confirm the update
+GET {{host}}/api/expenses/{{id}}
+
+### 8. Update unknown id — expect 404
+PUT {{host}}/api/expenses/00000000-0000-0000-0000-000000000000
+Content-Type: application/json
+
+{
+  "categoryId": 1,
+  "amount": 1.00,
+  "description": "x",
+  "expenseDate": "2026-09-01"
+}
+
+### 9. Delete — expect 204
+DELETE {{host}}/api/expenses/{{id}}
+
+### 9b. Get after delete — expect 404
+GET {{host}}/api/expenses/{{id}}
+
+### 9c. List after delete — expect []
+GET {{host}}/api/expenses
+
+### 10. Delete unknown id — expect 404
+DELETE {{host}}/api/expenses/00000000-0000-0000-0000-000000000000

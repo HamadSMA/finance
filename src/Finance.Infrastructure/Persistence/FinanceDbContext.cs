@@ -1,9 +1,10 @@
+using Finance.Application.Common;
 using Finance.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace Finance.Infrastructure.Persistence;
 
-public class FinanceDbContext : DbContext
+public class FinanceDbContext : DbContext, IFinanceDbContext
 {
     public FinanceDbContext(DbContextOptions<FinanceDbContext> options)
         : base(options) { }
