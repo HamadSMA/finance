@@ -16,35 +16,29 @@ frontend.
 | Testing        | Unit + integration tests against PostgreSQL  |
 | Infrastructure | Docker, Docker Compose, GitHub Actions       |
 
-## Solution Structure
+## Project Structure
+
+<details>
+<summary><strong>Show the structure</strong></summary>
 
 ```text
-expense-tracker/
+finance/
 ├── Finance.slnx
 ├── src/
 │   ├── Finance.Domain/          # Entities, value objects, domain events - no dependencies
 │   ├── Finance.Application/     # Use cases, abstractions, DTOs → Domain
 │   ├── Finance.Infrastructure/  # EF Core, persistence, external services → Application
 │   └── Finance.Api/             # Controllers, middleware, composition root
+├── api-tests/                   # REST Client request suites, one per phase
 └── tests/
 ```
 
-Dependencies point inward only: `Finance.Domain ← Finance.Application ← Finance.Infrastructure`,
-with `Finance.Api` referencing `Application` and `Infrastructure` as the composition root.
+</details>
 
-## Getting Started
-
-Requires the [.NET 10 SDK](https://dotnet.microsoft.com/download).
-
-```bash
-dotnet restore
-dotnet build
-dotnet run --project src/Finance.Api
-```
 
 ## Roadmap
 
-- [ ] **Phase 1 - Core Backend** · API, Clean Architecture, EF Core, PostgreSQL, Expense CRUD
+- [x] **Phase 1 - Core Backend** · API, Clean Architecture, EF Core, PostgreSQL, Expense CRUD
 - [ ] **Phase 2 - Real API** · DTOs, validation, filtering, sorting, pagination, ProblemDetails, dashboard aggregation endpoints
 - [ ] **Phase 3 - Security** · Keycloak, OIDC, OAuth 2.0, JWT, policies, ownership
 - [ ] **Phase 4 - Frontend** · React, TypeScript, OIDC, expense UI, dashboard, charts, API integration
