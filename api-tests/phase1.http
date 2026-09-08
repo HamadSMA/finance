@@ -1,4 +1,5 @@
-@host = https://localhost:7193
+@host = http://localhost:5048
+
 
 ### 1. Categories — expect 9, ids 1–9, Food→Other
 GET {{host}}/api/categories
