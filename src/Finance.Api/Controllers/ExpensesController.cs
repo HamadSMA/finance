@@ -51,7 +51,14 @@ public class ExpensesController(IFinanceDbContext db) : ControllerBase
             ))
             .FirstOrDefaultAsync(ct);
 
-        return expense is null ? NotFound() : Ok(expense);
+        if (expense is null)
+            return Problem(
+                title: "Expense not found",
+                statusCode: 404,
+                detail: $"No expense with id {id} exists."
+            );
+
+        return Ok(expense);
     }
 
     [HttpPost]
@@ -105,7 +112,11 @@ public class ExpensesController(IFinanceDbContext db) : ControllerBase
         );
 
         if (expense is null)
-            return NotFound();
+            return Problem(
+                title: "Expense not found",
+                statusCode: 404,
+                detail: $"No expense with id {id} exists."
+            );
 
         expense.CategoryId = request.CategoryId;
         expense.Amount = request.Amount;
@@ -127,11 +138,22 @@ public class ExpensesController(IFinanceDbContext db) : ControllerBase
         );
 
         if (expense is null)
-            return NotFound();
+            return Problem(
+                title: "Expense not found",
+                statusCode: 404,
+                detail: $"No expense with id {id} exists."
+            );
 
         db.Expenses.Remove(expense);
         await db.SaveChangesAsync(ct);
 
         return NoContent();
     }
+
+    //For testing unhandled exceptions, kept for reference
+    // [HttpGet("exception")]
+    // public IActionResult Exception()
+    // {
+    //     throw new Exception("This is my test exception.");
+    // }
 }
