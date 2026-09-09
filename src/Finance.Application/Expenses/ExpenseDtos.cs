@@ -5,7 +5,7 @@ namespace Finance.Application.Expenses;
 public record CreateExpenseRequest(
     int CategoryId,
     decimal Amount,
-    [property: Required, MaxLength(500)] string Description,
+    [Required, MaxLength(500)] string Description,
     DateOnly ExpenseDate
 ) : IValidatableObject
 {
@@ -16,7 +16,7 @@ public record CreateExpenseRequest(
 public record UpdateExpenseRequest(
     int CategoryId,
     decimal Amount,
-    [property: Required, MaxLength(500)] string Description,
+    [Required, MaxLength(500)] string Description,
     DateOnly ExpenseDate
 ) : IValidatableObject
 {

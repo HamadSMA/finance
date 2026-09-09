@@ -1,0 +1,46 @@
+@host = http://localhost:5048
+
+### seed one expense (table starts empty)
+# @name seed
+POST {{host}}/api/expenses
+Content-Type: application/json
+
+{
+  "categoryId": 1,
+  "amount": 42.50,
+  "description": "Coffee at COOP",
+  "expenseDate": "2026-09-01"
+}
+
+### validation: bad category -> 400 (was 500)
+POST {{host}}/api/expenses
+Content-Type: application/json
+
+{ "categoryId": 99, "amount": 10.00, "description": "bad", "expenseDate": "2026-09-01" }
+
+### validation: future date -> 400
+POST {{host}}/api/expenses
+Content-Type: application/json
+
+{ "categoryId": 1, "amount": 10.00, "description": "future", "expenseDate": "2099-01-01" }
+
+### filter (case-insensitive search)
+GET {{host}}/api/expenses?search=coop
+
+### sort
+GET {{host}}/api/expenses?sortBy=amount&sortDirection=asc
+
+### pagination envelope
+GET {{host}}/api/expenses?page=1&pageSize=2
+
+### dashboard summary
+GET {{host}}/api/dashboard/summary?from=2026-01-01&to=2026-12-31
+
+### dashboard by-category
+GET {{host}}/api/dashboard/by-category?from=2026-01-01&to=2026-12-31
+
+### dashboard by-day
+GET {{host}}/api/dashboard/by-day?from=2026-09-01&to=2026-09-30
+
+### dashboard top-expenses
+GET {{host}}/api/dashboard/top-expenses?from=2026-01-01&to=2026-12-31
