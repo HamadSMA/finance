@@ -69,7 +69,14 @@ public class ExpensesController(IFinanceDbContext db) : ControllerBase
                     : expenses.OrderBy(e => e.ExpenseDate),
         };
 
+        var page = query.Page is int p && p > 0 ? p : 1;
+        var pageSize = query.PageSize is int s && s > 0 ? Math.Min(s, 100) : 20;
+
+        var totalCount = await expenses.CountAsync(ct);
+
         var items = await expenses
+            .Skip((page - 1) * pageSize)
+            .Take(pageSize)
             .Select(e => new ExpenseResponse(
                 e.Id,
                 e.CategoryId,
@@ -82,7 +89,9 @@ public class ExpensesController(IFinanceDbContext db) : ControllerBase
             ))
             .ToListAsync(ct);
 
-        return Ok(items);
+        var totalPages = (int)Math.Ceiling(totalCount / (double)pageSize);
+
+        return Ok(new PagedResult<ExpenseResponse>(items, page, pageSize, totalCount, totalPages));
     }
 
     [HttpGet("{id:guid}")]
