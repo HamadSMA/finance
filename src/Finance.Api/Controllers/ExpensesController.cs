@@ -7,17 +7,69 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Finance.Api.Controllers;
 
+public record ExpenseQuery(
+    int? CategoryId,
+    decimal? MinAmount,
+    decimal? MaxAmount,
+    DateOnly? FromDate,
+    DateOnly? ToDate,
+    string? Search,
+    string? SortBy,
+    string? SortDirection,
+    int? Page,
+    int? PageSize
+);
+
 [ApiController]
 [Route("api/expenses")]
 public class ExpensesController(IFinanceDbContext db) : ControllerBase
 {
     [HttpGet]
-    public async Task<IActionResult> GetAll(CancellationToken ct)
+    public async Task<IActionResult> GetAll([FromQuery] ExpenseQuery query, CancellationToken ct)
     {
-        var items = await db
-            .Expenses.AsNoTracking()
-            .Where(e => e.UserId == DevUser.Id)
-            .OrderByDescending(e => e.ExpenseDate)
+        var expenses = db.Expenses.AsNoTracking().Where(e => e.UserId == DevUser.Id);
+
+        if (query.CategoryId is int categoryId)
+            expenses = expenses.Where(e => e.CategoryId == categoryId);
+
+        if (query.MinAmount is decimal min)
+            expenses = expenses.Where(e => e.Amount >= min);
+
+        if (query.MaxAmount is decimal max)
+            expenses = expenses.Where(e => e.Amount <= max);
+
+        if (query.FromDate is DateOnly from)
+            expenses = expenses.Where(e => e.ExpenseDate >= from);
+
+        if (query.ToDate is DateOnly to)
+            expenses = expenses.Where(e => e.ExpenseDate <= to);
+
+        if (!string.IsNullOrWhiteSpace(query.Search))
+            expenses = expenses.Where(e => EF.Functions.ILike(e.Description, $"%{query.Search}%"));
+
+        var descending = !string.Equals(
+            query.SortDirection,
+            "asc",
+            StringComparison.OrdinalIgnoreCase
+        );
+
+        expenses = query.SortBy?.ToLowerInvariant() switch
+        {
+            "amount"
+                => descending
+                    ? expenses.OrderByDescending(e => e.Amount)
+                    : expenses.OrderBy(e => e.Amount),
+            "createdat"
+                => descending
+                    ? expenses.OrderByDescending(e => e.CreatedAt)
+                    : expenses.OrderBy(e => e.CreatedAt),
+            _
+                => descending
+                    ? expenses.OrderByDescending(e => e.ExpenseDate)
+                    : expenses.OrderBy(e => e.ExpenseDate),
+        };
+
+        var items = await expenses
             .Select(e => new ExpenseResponse(
                 e.Id,
                 e.CategoryId,
